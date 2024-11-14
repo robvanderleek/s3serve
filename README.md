@@ -13,4 +13,4 @@
 
 </div>
 
-*A Simple S3 Server 🪣*
+*A Simple S3 Server 🗄️*

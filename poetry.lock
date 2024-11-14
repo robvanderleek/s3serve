@@ -63,7 +63,6 @@ files = [
 
 [package.dependencies]
 botocore-stubs = "*"
-mypy-boto3-s3 = {version = ">=1.35.0,<1.36.0", optional = true, markers = "extra == \"s3\""}
 types-s3transfer = "*"
 
 [package.extras]
@@ -1175,17 +1174,6 @@ stepfunctions = ["antlr4-python3-runtime", "jsonpath-ng"]
 xray = ["aws-xray-sdk (>=0.93,!=0.96)", "setuptools"]
 
 [[package]]
-name = "mypy-boto3-s3"
-version = "1.35.46"
-description = "Type annotations for boto3.S3 1.35.46 service generated with mypy-boto3-builder 8.1.2"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "mypy_boto3_s3-1.35.46-py3-none-any.whl", hash = "sha256:34d19dfba400f5b9bd6b64f09eb8f8eedef60545b410a3753fe99fec0c41ba78"},
-    {file = "mypy_boto3_s3-1.35.46.tar.gz", hash = "sha256:f0087a3765d103b2db565cd8065ebc2b0f70f2dd4e92c132f64b8945dd869940"},
-]
-
-[[package]]
 name = "packaging"
 version = "24.2"
 description = "Core utilities for Python packages"
@@ -1964,4 +1952,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "e1c5a79d0aeba51b8b62dc939bf66221d3d189f16b60a09189469a9ccaa03331"
+content-hash = "4d1ce01e91b2c4d73d420ab505499ac714dd508537845b6278d50aa9b5a4e556"
