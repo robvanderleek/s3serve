@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "s3serve"
+version = "0.1.0"
+description = "Simple S3 Server"
+authors = ["Rob van der Leek <5324924+robvanderleek@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+s3serve = "s3serve.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
