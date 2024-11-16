@@ -1,5 +1,5 @@
 import {AppBar, Box, CssBaseline, Drawer, styled, Toolbar} from "@mui/material";
-import BucketList from "./components/BucketList.tsx";
+import {Link, Outlet} from "react-router-dom";
 
 const StyledBox = styled(Box)`
     display: flex;
@@ -22,23 +22,21 @@ const StyledDrawer = styled(Drawer)`
 `;
 
 function App() {
-
     return (
         <StyledBox>
             <CssBaseline/>
             <StyledAppBar position="fixed">
                 <Toolbar>
-                    S3 Server
+                    <Link to="/">S3 Server</Link>
                 </Toolbar>
             </StyledAppBar>
             <StyledDrawer variant="permanent">
                 <Toolbar/>
-                <BucketList/>
+                <Outlet/>
             </StyledDrawer>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
                 <h1>Hello world</h1>
-
             </Box>
         </StyledBox>
     );
