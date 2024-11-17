@@ -23,7 +23,7 @@ const router = createBrowserRouter([
                 element: <BucketList/>,
             },
             {
-                path: "/bucket/:name",
+                path: "/bucket/:bucketName",
                 element: <FolderList/>,
             }
         ],

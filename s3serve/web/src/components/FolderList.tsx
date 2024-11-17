@@ -5,13 +5,13 @@ import {Link, useParams, useSearchParams} from "react-router-dom";
 
 export default function FolderList() {
     const [folders, setFolders] = useState<string[]>([]);
-    const {name} = useParams();
+    const {bucketName} = useParams();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        if (name) {
+        if (bucketName) {
             const loadBuckets = async () => {
-                let url = `/api/v1/buckets/${name}/folders`;
+                let url = `/api/v1/buckets/${bucketName}/folders`;
                 const prefix = searchParams.get('prefix');
                 if (prefix) {
                     url += `?prefix=${prefix}`;
@@ -22,17 +22,24 @@ export default function FolderList() {
             };
             loadBuckets();
         }
-    }, [name, searchParams]);
+    }, [bucketName, searchParams]);
 
-    const renderBucketListItem = (item: string) => {
+    const renderBucketListItem = (folder: string) => {
+        let to = `/bucket/${bucketName}`;
+        const prefix = searchParams.get('prefix');
+        if (prefix) {
+            to += `?prefix=${prefix}${encodeURIComponent(folder)}/`;
+        } else {
+            to += `?prefix=${encodeURIComponent(folder)}/`;
+        }
         return (
-            <ListItem key={item} disablePadding>
-                <ListItemButton component={Link} to={`/bucket/${name}?prefix=${encodeURIComponent(item)}`}>
+            <ListItem key={folder} disablePadding>
+                <ListItemButton component={Link} to={to}>
                     <ListItemIcon>
                         <FolderOutlined/>
                     </ListItemIcon>
                     <ListItemText>
-                        {item}
+                        {folder}
                     </ListItemText>
                 </ListItemButton>
             </ListItem>
@@ -40,7 +47,7 @@ export default function FolderList() {
     }
 
     const renderBucketListItems = () => {
-        return folders.map((item) => renderBucketListItem(item));
+        return folders.map((folder) => renderBucketListItem(folder));
     }
 
     return (

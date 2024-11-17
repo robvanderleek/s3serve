@@ -19,8 +19,12 @@ def get_folders(bucket: str, prefix: str = None):
         objects = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, Delimiter='/')
     else:
         objects = s3.list_objects_v2(Bucket=bucket, Delimiter='/')
-    folders = objects.get('CommonPrefixes', [])
-    return {"folders": [folders['Prefix'] for folders in folders]}
+    common_prefixes = objects.get('CommonPrefixes', [])
+    folders = []
+    for common_prefix in common_prefixes:
+        folder = [part for part in common_prefix['Prefix'].split('/') if part][-1]
+        folders.append(folder)
+    return {"folders": folders}
 
 
 @router.get("/buckets/{bucket}/objects")

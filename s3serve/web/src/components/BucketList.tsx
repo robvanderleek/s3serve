@@ -4,26 +4,26 @@ import {CloudCircleOutlined} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 export default function BucketList() {
-    const [buckets, setbuckets] = useState<string[]>([]);
+    const [buckets, setBuckets] = useState<string[]>([]);
 
     useEffect(() => {
         const loadBuckets = async () => {
             const res = await fetch('/api/v1/buckets');
             const json = await res.json();
-            setbuckets(json.buckets);
+            setBuckets(json.buckets);
         };
         loadBuckets();
     }, []);
 
-    const renderBucketListItem = (item: string) => {
+    const renderBucketListItem = (bucket: string) => {
         return (
-            <ListItem key={item} disablePadding>
-                <ListItemButton component={Link} to={`bucket/${item}`}>
+            <ListItem key={bucket} disablePadding>
+                <ListItemButton component={Link} to={`bucket/${bucket}`}>
                     <ListItemIcon>
                         <CloudCircleOutlined/>
                     </ListItemIcon>
                     <ListItemText>
-                        {item}
+                        {bucket}
                     </ListItemText>
                 </ListItemButton>
             </ListItem>
@@ -31,7 +31,7 @@ export default function BucketList() {
     }
 
     const renderBucketListItems = () => {
-        return buckets.map((item) => renderBucketListItem(item));
+        return buckets.map((bucket) => renderBucketListItem(bucket));
     }
 
     return (
