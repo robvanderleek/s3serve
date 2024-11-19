@@ -16,15 +16,20 @@ export default function ObjectGrid() {
                 }
                 const res = await fetch(url);
                 const json = await res.json();
-                setObjectKeys(json.objects);
+                setObjectKeys(json.objects.filter((o: string) => isImageKey(o)));
             };
             loadBuckets();
         }
     }, [bucketName, searchParams]);
 
+    const isImageKey = (key: string) => {
+        return key.toLowerCase().endsWith('.jpg') || key.toLowerCase().endsWith('.jpeg') || key.toLowerCase().endsWith('.png');
+    }
+
     const renderObject = (key: string) => {
         return (
-            <img key={key} src={`/api/v1/buckets/${bucketName}/object?key=${encodeURIComponent(key)}`} alt={key} width="320"
+            <img key={key} src={`/api/v1/buckets/${bucketName}/object?key=${encodeURIComponent(key)}`} alt={key}
+                 width="320"
                  height="320"/>
         );
     }

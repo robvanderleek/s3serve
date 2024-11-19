@@ -28,9 +28,9 @@ export default function FolderList() {
         let to = `/bucket/${bucketName}`;
         const prefix = searchParams.get('prefix');
         if (prefix) {
-            to += `?prefix=${prefix}${encodeURIComponent(folder)}/`;
+            to += `?prefix=${encodeURIComponent(prefix + folder + '/')}`;
         } else {
-            to += `?prefix=${encodeURIComponent(folder)}/`;
+            to += `?prefix=${encodeURIComponent(folder + '/')}`;
         }
         return (
             <ListItem key={folder} disablePadding>
@@ -46,14 +46,23 @@ export default function FolderList() {
         );
     }
 
-    const renderBucketListItems = () => {
-        return folders.map((folder) => renderBucketListItem(folder));
+    const getBackLink = () => {
+        let result = '/';
+        const prefix = searchParams.get('prefix');
+        if (prefix) {
+            result += `bucket/${bucketName}`;
+            const folderSeparatorIndex = prefix.lastIndexOf('/', prefix.length - 2);
+            if (folderSeparatorIndex > 0) {
+                result += `?prefix=${encodeURIComponent(prefix.substring(0, folderSeparatorIndex + 1))}`;
+            }
+        }
+        return result;
     }
 
-    return (
-        <List>
+    const renderBackItem = () => {
+        return (
             <ListItem disablePadding>
-                <ListItemButton component={Link} to={`/`}>
+                <ListItemButton component={Link} to={getBackLink()}>
                     <ListItemIcon>
                         <ArrowBackOutlined/>
                     </ListItemIcon>
@@ -62,6 +71,16 @@ export default function FolderList() {
                     </ListItemText>
                 </ListItemButton>
             </ListItem>
+        )
+    }
+
+    const renderBucketListItems = () => {
+        return folders.map((folder) => renderBucketListItem(folder));
+    }
+
+    return (
+        <List>
+            {renderBackItem()}
             {renderBucketListItems()}
         </List>
     );
