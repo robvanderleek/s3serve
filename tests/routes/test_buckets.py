@@ -1,11 +1,10 @@
-import boto3
 from moto import mock_aws
 from starlette.testclient import TestClient
 
 from s3serve.app import app
 
 client = TestClient(app)
-s3 = boto3.resource('s3', region_name='us-east-1')
+
 
 @mock_aws
 def test_get_buckets_no_buckets():
@@ -14,8 +13,7 @@ def test_get_buckets_no_buckets():
     assert res.json() == {"buckets": []}
 
 
-@mock_aws
-def test_get_buckets():
+def test_get_buckets(s3):
     s3.create_bucket(Bucket='test-bucket')
 
     res = client.get("/api/v1/buckets")
@@ -23,29 +21,26 @@ def test_get_buckets():
     assert res.json() == {"buckets": ["test-bucket"]}
 
 
-@mock_aws
-def test_get_folders_no_folders():
+def test_get_folders_no_folders(s3):
     s3.create_bucket(Bucket='test-bucket')
     res = client.get("/api/v1/buckets/test-bucket/folders")
 
     assert res.json() == {"folders": []}
 
 
-@mock_aws
-def test_get_folders_single_folder():
-    bucket = s3.create_bucket(Bucket='test-bucket')
-    bucket.put_object(Key='folder/')
+def test_get_folders_single_folder(s3):
+    s3.create_bucket(Bucket='test-bucket')
+    s3.put_object(Bucket='test-bucket', Key='folder/')
 
     res = client.get("/api/v1/buckets/test-bucket/folders")
 
     assert res.json() == {"folders": ["folder"]}
 
 
-@mock_aws
-def test_get_folders_nested_folders():
-    bucket = s3.create_bucket(Bucket='test-bucket')
-    bucket.put_object(Key='folder/foo/')
-    bucket.put_object(Key='folder/bar/')
+def test_get_folders_nested_folders(s3):
+    s3.create_bucket(Bucket='test-bucket')
+    s3.put_object(Bucket='test-bucket', Key='folder/foo/')
+    s3.put_object(Bucket='test-bucket', Key='folder/bar/')
 
     res = client.get("/api/v1/buckets/test-bucket/folders")
 
@@ -57,10 +52,10 @@ def test_get_folders_nested_folders():
     assert 'foo' in result
     assert 'bar' in result
 
-@mock_aws
-def test_get_folders_incomplete_prefix():
-    bucket = s3.create_bucket(Bucket='test-bucket')
-    bucket.put_object(Key='folder/')
+
+def test_get_folders_incomplete_prefix(s3):
+    s3.create_bucket(Bucket='test-bucket')
+    s3.put_object(Bucket='test-bucket', Key='folder/')
 
     res = client.get("/api/v1/buckets/test-bucket/folders", params={"prefix": "fold"})
 
