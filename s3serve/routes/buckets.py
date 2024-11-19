@@ -1,5 +1,8 @@
+import io
+
 import boto3
 from fastapi import APIRouter
+from starlette.responses import Response
 
 router = APIRouter()
 
@@ -30,6 +33,16 @@ def get_folders(bucket: str, prefix: str = None):
 @router.get("/buckets/{bucket}/objects")
 def get_objects(bucket: str, prefix: str = None):
     s3 = boto3.client('s3')
-    objects = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=25, Delimiter='/')
-    folders = objects.get('CommonPrefixes', [])
-    return {"folders": [folders['Prefix'] for folders in folders]}
+    res = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=25, Delimiter='/')
+    objects = res['Contents']
+    return {"objects": [obj['Key'] for obj in objects]}
+
+
+@router.get("/buckets/{bucket}/object")
+def get_object(bucket: str, key: str):
+    s3 = boto3.client('s3')
+    print(bucket, key)
+    res = s3.get_object(Bucket=bucket, Key=key)
+    body = res['Body']
+    image_bytes = body.read()
+    return Response(content=image_bytes, media_type="image/jpeg")

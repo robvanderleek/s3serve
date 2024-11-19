@@ -5,7 +5,7 @@ from starlette.testclient import TestClient
 from s3serve.app import app
 
 client = TestClient(app)
-
+s3 = boto3.resource('s3', region_name='us-east-1')
 
 @mock_aws
 def test_get_buckets_no_buckets():
@@ -16,7 +16,6 @@ def test_get_buckets_no_buckets():
 
 @mock_aws
 def test_get_buckets():
-    s3 = boto3.resource('s3')
     s3.create_bucket(Bucket='test-bucket')
 
     res = client.get("/api/v1/buckets")
@@ -26,7 +25,6 @@ def test_get_buckets():
 
 @mock_aws
 def test_get_folders_no_folders():
-    s3 = boto3.resource('s3')
     s3.create_bucket(Bucket='test-bucket')
     res = client.get("/api/v1/buckets/test-bucket/folders")
 
@@ -35,7 +33,6 @@ def test_get_folders_no_folders():
 
 @mock_aws
 def test_get_folders_single_folder():
-    s3 = boto3.resource('s3')
     bucket = s3.create_bucket(Bucket='test-bucket')
     bucket.put_object(Key='folder/')
 
@@ -46,7 +43,6 @@ def test_get_folders_single_folder():
 
 @mock_aws
 def test_get_folders_nested_folders():
-    s3 = boto3.resource('s3')
     bucket = s3.create_bucket(Bucket='test-bucket')
     bucket.put_object(Key='folder/foo/')
     bucket.put_object(Key='folder/bar/')
@@ -63,7 +59,6 @@ def test_get_folders_nested_folders():
 
 @mock_aws
 def test_get_folders_incomplete_prefix():
-    s3 = boto3.resource('s3')
     bucket = s3.create_bucket(Bucket='test-bucket')
     bucket.put_object(Key='folder/')
 

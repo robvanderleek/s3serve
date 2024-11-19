@@ -1,5 +1,6 @@
 import {AppBar, Box, CssBaseline, Drawer, styled, Toolbar} from "@mui/material";
 import {Link, Outlet} from "react-router-dom";
+import ObjectGrid from "./components/ObjectGrid.tsx";
 
 const StyledBox = styled(Box)`
     display: flex;
@@ -36,7 +37,7 @@ function App() {
             </StyledDrawer>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
-                <h1>Hello world</h1>
+                <ObjectGrid/>
             </Box>
         </StyledBox>
     );

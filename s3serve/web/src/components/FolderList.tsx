@@ -1,6 +1,6 @@
 import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {useEffect, useState} from "react";
-import {FolderOutlined} from "@mui/icons-material";
+import {ArrowBackOutlined, FolderOutlined} from "@mui/icons-material";
 import {Link, useParams, useSearchParams} from "react-router-dom";
 
 export default function FolderList() {
@@ -52,6 +52,16 @@ export default function FolderList() {
 
     return (
         <List>
+            <ListItem disablePadding>
+                <ListItemButton component={Link} to={`/`}>
+                    <ListItemIcon>
+                        <ArrowBackOutlined/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        Back
+                    </ListItemText>
+                </ListItemButton>
+            </ListItem>
             {renderBucketListItems()}
         </List>
     );
