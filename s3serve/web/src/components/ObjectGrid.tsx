@@ -1,5 +1,6 @@
 import {useParams, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import ImageObject from "./ImageObject.tsx";
 
 export default function ObjectGrid() {
     const {bucketName} = useParams();
@@ -26,18 +27,12 @@ export default function ObjectGrid() {
         return key.toLowerCase().endsWith('.jpg') || key.toLowerCase().endsWith('.jpeg') || key.toLowerCase().endsWith('.png');
     }
 
-    const renderObject = (key: string) => {
+    if (bucketName) {
         return (
-            <img key={key} src={`/api/v1/buckets/${bucketName}/object?key=${encodeURIComponent(key)}`} alt={key}
-                 width="320"
-                 height="320"/>
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {objectKeys.map(k => <ImageObject key={k} bucketName={bucketName} objectKey={k}/>)}
+            </div>
         );
     }
-
-    return (
-        <div>
-            {objectKeys.map(k => renderObject(k))}
-        </div>
-    );
 
 }
