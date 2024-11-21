@@ -1,20 +1,21 @@
 import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {useEffect, useState} from "react";
 import {ArrowBackOutlined, FolderOutlined} from "@mui/icons-material";
-import {Link, useParams, useSearchParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {parseBucketName, parseObjectKey} from "../utils.ts";
 
 export default function FolderList() {
     const [folders, setFolders] = useState<string[]>([]);
-    const {bucketName} = useParams();
-    const [searchParams] = useSearchParams();
+    const {'*': path} = useParams();
+    const bucketName = parseBucketName(path);
+    const objectKey = parseObjectKey(path);
 
     useEffect(() => {
         if (bucketName) {
             const loadBuckets = async () => {
                 let url = `/api/v1/buckets/${bucketName}/folders`;
-                const prefix = searchParams.get('prefix');
-                if (prefix) {
-                    url += `?prefix=${prefix}`;
+                if (objectKey) {
+                    url += `?prefix=${encodeURIComponent(objectKey + '/')}`;
                 }
                 const res = await fetch(url);
                 const json = await res.json();
@@ -22,19 +23,12 @@ export default function FolderList() {
             };
             loadBuckets();
         }
-    }, [bucketName, searchParams]);
+    }, [bucketName, objectKey]);
 
     const renderBucketListItem = (folder: string) => {
-        let to = `/bucket/${bucketName}`;
-        const prefix = searchParams.get('prefix');
-        if (prefix) {
-            to += `?prefix=${encodeURIComponent(prefix + folder + '/')}`;
-        } else {
-            to += `?prefix=${encodeURIComponent(folder + '/')}`;
-        }
         return (
             <ListItem key={folder} disablePadding>
-                <ListItemButton component={Link} to={to}>
+                <ListItemButton component={Link} to={`${path}/${folder}`}>
                     <ListItemIcon>
                         <FolderOutlined/>
                     </ListItemIcon>
@@ -48,12 +42,11 @@ export default function FolderList() {
 
     const getBackLink = () => {
         let result = '/';
-        const prefix = searchParams.get('prefix');
-        if (prefix) {
+        if (objectKey) {
             result += `bucket/${bucketName}`;
-            const folderSeparatorIndex = prefix.lastIndexOf('/', prefix.length - 2);
+            const folderSeparatorIndex = objectKey.lastIndexOf('/');
             if (folderSeparatorIndex > 0) {
-                result += `?prefix=${encodeURIComponent(prefix.substring(0, folderSeparatorIndex + 1))}`;
+                result += `/${(objectKey.substring(0, folderSeparatorIndex))}`;
             }
         }
         return result;
