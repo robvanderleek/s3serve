@@ -1,6 +1,6 @@
 import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {useEffect, useState} from "react";
-import {CloudCircleOutlined} from "@mui/icons-material";
+import {Inventory2Outlined} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 export default function BucketList() {
@@ -20,7 +20,7 @@ export default function BucketList() {
             <ListItem key={bucket} disablePadding>
                 <ListItemButton component={Link} to={`bucket/${bucket}`}>
                     <ListItemIcon>
-                        <CloudCircleOutlined/>
+                        <Inventory2Outlined/>
                     </ListItemIcon>
                     <ListItemText>
                         {bucket}
