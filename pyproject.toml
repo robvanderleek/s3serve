@@ -2,8 +2,11 @@
 name = "s3serve"
 version = "0.1.0"
 description = "Simple S3 Server"
-authors = ["Rob van der Leek <5324924+robvanderleek@users.noreply.github.com>"]
+authors = ["Rob van der Leek <robvanderleek@gmail.com>"]
+license = "GPL-3.0-or-later"
 readme = "README.md"
+homepage = "https://github.com/robvanderleek/s3serve"
+repository = "https://github.com/robvanderleek/s3serve.git"
 
 [tool.poetry.scripts]
 s3serve = "s3serve.__main__:main"
