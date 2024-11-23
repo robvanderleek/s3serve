@@ -18,6 +18,12 @@ boto3 = "^1.35.60"
 pydantic-settings = "^2.6.1"
 boto3-stubs-lite = {extras = ["s3"], version = "^1.35.64"}
 
+[tool.semantic_release]
+branch = "main"
+version_toml = [ "pyproject.toml:tool.poetry.version" ]
+version_variables = [ "s3serve/version.py:version" ]
+upload_to_repository = false
+upload_to_release = false
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
