@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.2.0 (2024-11-23)
+
+### Features
+
+- ✨ Add breadcrumbs to navigation
+  ([`e2b51d2`](https://github.com/robvanderleek/s3serve/commit/e2b51d22458b042c5634b305a8b910ba07489a69))
+
+
 ## v0.1.0 (2024-11-23)
 
 ### Chores
