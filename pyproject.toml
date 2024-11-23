@@ -9,7 +9,7 @@ readme = "README.md"
 s3serve = "s3serve.__main__:main"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = ">=3.11,<3.14"
 fastapi = {extras = ["standard"], version = "^0.115.5"}
 boto3 = "^1.35.60"
 pydantic-settings = "^2.6.1"
