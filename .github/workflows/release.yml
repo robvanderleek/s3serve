@@ -1,0 +1,52 @@
+name: 'release'
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+    - name: 'Checkout Sources'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 'Set up Python'
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.13
+
+    - name: 'Set up Poetry'
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.8.3
+
+    - name: 'Install dependencies'
+      run: poetry install --no-interaction --no-root
+
+    - name: 'Run unit-tests'
+      run: poetry run pytest
+
+    - name: 'Python Semantic Release'
+      id: release
+      uses: python-semantic-release/python-semantic-release@v9.14.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 'Update checkout'
+      run: |
+        git pull
+      if: steps.release.outputs.released == 'true'
+
+    - name: 'Build distribution'
+      run: poetry build
+      if: steps.release.outputs.released == 'true'
+  
+    - name: 'Publish to PyPI'
+      uses: pypa/gh-action-pypi-publish@release/v1
+      if: steps.release.outputs.released == 'true'

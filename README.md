@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Logo](docs/logo.png)
+![Logo](https://raw.githubusercontent.com/robvanderleek/s3serve/refs/heads/main/docs/logo.png)
 
 </div>
 
