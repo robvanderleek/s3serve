@@ -1,9 +1,9 @@
-import io
-
 import boto3
 from fastapi import APIRouter
 from starlette.responses import Response
 
+from s3serve.schemas.ListObjectsV2Response import ListObjectsV2Response
+from s3serve.services import s3_service
 from s3serve.utils import get_media_type
 
 router = APIRouter()
@@ -11,9 +11,7 @@ router = APIRouter()
 
 @router.get("/buckets")
 def get_buckets():
-    s3 = boto3.client('s3')
-    res = s3.list_buckets(MaxBuckets=1000)
-    buckets = res['Buckets']
+    buckets = s3_service.get_buckets()
     return {"buckets": [bucket['Name'] for bucket in buckets]}
 
 
@@ -33,14 +31,8 @@ def get_folders(bucket: str, prefix: str = None):
 
 
 @router.get("/buckets/{bucket}/objects")
-def get_objects(bucket: str, prefix: str = None):
-    s3 = boto3.client('s3')
-    if prefix:
-        res = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=25, Delimiter='/')
-    else:
-        res = s3.list_objects_v2(Bucket=bucket, MaxKeys=25, Delimiter='/')
-    objects = res['Contents'] if 'Contents' in res else []
-    return {"objects": [obj['Key'] for obj in objects]}
+def get_objects(bucket: str, prefix: str = None) -> ListObjectsV2Response:
+    return s3_service.get_objects(bucket, prefix)
 
 
 @router.get("/buckets/{bucket}/object")

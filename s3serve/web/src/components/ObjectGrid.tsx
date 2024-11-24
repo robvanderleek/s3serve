@@ -2,12 +2,17 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ImageObject from "./ImageObject.tsx";
 import {parseBucketName, parseObjectKey} from "../utils.ts";
+import InfiniteScroll from "react-infinite-scroller";
+import {Bars} from "react-loader-spinner";
+import {ListObjectsV2Response} from "../entities/ListObjectsV2Response.ts";
+import {ListObjectsV2ContentResponse} from "../entities/ListObjectsV2ContentResponse.ts";
 
 export default function ObjectGrid() {
     const {'*': path} = useParams();
     const bucketName = parseBucketName(path);
     const objectKey = parseObjectKey(path);
-    const [objectKeys, setObjectKeys] = useState<string[]>([]);
+    const [hasMore, setHasMore] = useState<boolean>(false);
+    const [objectKeys, setObjectKeys] = useState<ListObjectsV2ContentResponse[]>([]);
 
     useEffect(() => {
         if (bucketName) {
@@ -17,8 +22,9 @@ export default function ObjectGrid() {
                     url += `?prefix=${objectKey}/`;
                 }
                 const res = await fetch(url);
-                const json = await res.json();
-                setObjectKeys(json.objects.filter((o: string) => isImageKey(o)));
+                const listObjects = await res.json() as ListObjectsV2Response;
+                setHasMore(listObjects.IsTruncated);
+                setObjectKeys(listObjects.Contents.filter((obj) => isImageKey(obj.Key)));
             };
             loadBuckets();
         }
@@ -29,11 +35,14 @@ export default function ObjectGrid() {
     }
 
     if (bucketName) {
-        return (
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                {objectKeys.map(k => <ImageObject key={k} bucketName={bucketName} objectKey={k}/>)}
-            </div>
-        );
+        return (<InfiniteScroll loadMore={() => {
+        }} hasMore={hasMore}
+                                loader={<div key="loading-indicator"><Bars height="50" width="60" color="#e6772b"
+                                                                           ariaLabel="bars-loading"/></div>} style={{
+            display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap'
+        }}>
+            {objectKeys.map(ok => <ImageObject key={ok.Key} bucketName={bucketName} objectKey={ok.Key}/>)}
+        </InfiniteScroll>);
     }
 
 }
