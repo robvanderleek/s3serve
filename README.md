@@ -15,6 +15,20 @@
 
 *A Simple S3 Server 🗄️*
 
+# Quickstart
+
+Install S3 Serve with pipx:
+
+```shell
+pipx install s3serve
+```
+
+Start S3 Serve:
+
+```shell
+s3serve
+```
+
 # Development
 
 After installing dependencies with `poetry install`, S3 Serve can be run from

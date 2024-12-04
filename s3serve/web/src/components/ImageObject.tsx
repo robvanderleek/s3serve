@@ -18,9 +18,11 @@ export default function ImageObject(props: { bucketName: string, objectKey: stri
         loadImage();
     }, []);
 
+
     return (
         <ImageObjectContainer>
             {loading && <Skeleton variant="rectangular" width={180} height={180}/>}
+
             {!loading &&
                 <Tooltip title={objectKey}>
                     <Image src={imageBlobUrl} alt={objectKey}/>

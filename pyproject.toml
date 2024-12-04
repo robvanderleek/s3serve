@@ -18,6 +18,7 @@ boto3 = "^1.35.60"
 pydantic-settings = "^2.6.1"
 boto3-stubs-lite = {extras = ["s3"], version = "^1.35.64"}
 pyperclip = "^1.9.0"
+typer = "^0.15.1"
 
 [tool.semantic_release]
 branch = "main"
