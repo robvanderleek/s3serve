@@ -1,5 +1,5 @@
 import {Image, ImageObjectContainer} from "./ImageObject.style.tsx";
-import {Skeleton} from "@mui/material";
+import {Skeleton, Tooltip} from "@mui/material";
 import {useEffect, useState} from "react";
 
 export default function ImageObject(props: { bucketName: string, objectKey: string }) {
@@ -21,7 +21,11 @@ export default function ImageObject(props: { bucketName: string, objectKey: stri
     return (
         <ImageObjectContainer>
             {loading && <Skeleton variant="rectangular" width={180} height={180}/>}
-            {!loading && <Image src={imageBlobUrl} alt={objectKey}/>}
+            {!loading &&
+                <Tooltip title={objectKey}>
+                    <Image src={imageBlobUrl} alt={objectKey}/>
+                </Tooltip>
+            }
         </ImageObjectContainer>
     );
 }
