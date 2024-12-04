@@ -32,6 +32,8 @@ To install the development repository locally run:
 pipx install .
 ```
 
+(add `--force` flag to overwrite current install)
+
 To install the `main` branch locally run:
 
 ```shell

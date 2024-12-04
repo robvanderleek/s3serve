@@ -17,22 +17,17 @@ def get_buckets():
 
 @router.get("/buckets/{bucket}/folders")
 def get_folders(bucket: str, prefix: str = None):
-    s3 = boto3.client('s3')
-    if prefix:
-        objects = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, Delimiter='/')
-    else:
-        objects = s3.list_objects_v2(Bucket=bucket, Delimiter='/')
-    common_prefixes = objects.get('CommonPrefixes', [])
+    objects = s3_service.get_objects(bucket, prefix)
     folders = []
-    for common_prefix in common_prefixes:
-        folder = [part for part in common_prefix['Prefix'].split('/') if part][-1]
+    for common_prefix in objects.commonPrefixes:
+        folder = [part for part in common_prefix.prefix.split('/') if part][-1]
         folders.append(folder)
     return {"folders": folders}
 
 
-@router.get("/buckets/{bucket}/objects")
-def get_objects(bucket: str, prefix: str = None) -> ListObjectsV2Response:
-    return s3_service.get_objects(bucket, prefix)
+@router.get("/buckets/{bucket}/objects", response_model_exclude_none=True)
+def get_objects(bucket: str, prefix: str = None, token: str = None) -> ListObjectsV2Response:
+    return s3_service.get_objects(bucket, prefix, token)
 
 
 @router.get("/buckets/{bucket}/object")

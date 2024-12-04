@@ -30,12 +30,14 @@ def get_buckets() -> list[dict]:
         return []
 
 
-def get_objects(bucket: str, prefix: str = None) -> ListObjectsV2Response:
+def get_objects(bucket: str, prefix: str = None, token: str = None) -> ListObjectsV2Response:
     try:
+        params = {'Bucket': bucket, 'MaxKeys': 25, 'Delimiter': '/'}
         if prefix:
-            res = s3_client().list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=25, Delimiter='/')
-        else:
-            res = s3_client().list_objects_v2(Bucket=bucket, MaxKeys=25, Delimiter='/')
+            params['Prefix'] = prefix
+        if token:
+            params['ContinuationToken'] = token
+        res = s3_client().list_objects_v2(**params)
         return ListObjectsV2Response(**res)
     except ClientError as e:
         logging.error(e)
