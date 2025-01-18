@@ -1,4 +1,4 @@
-import {AppBar, Box, CssBaseline, Drawer, styled, Toolbar} from "@mui/material";
+import {AppBar, Box, Drawer, styled, Toolbar} from "@mui/material";
 import {Outlet, useParams} from "react-router-dom";
 import ObjectGrid from "./components/ObjectGrid.tsx";
 import BreadCrumbs from "./components/BreadCrumbs.tsx";
@@ -6,6 +6,8 @@ import BreadCrumbs from "./components/BreadCrumbs.tsx";
 
 const StyledBox = styled(Box)`
     display: flex;
+    height: 100%;
+    width: 100%;
 `;
 
 const StyledAppBar = styled(AppBar)(({theme}) => ({
@@ -21,6 +23,7 @@ const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
         width: ${drawerWidth}px;
         box-sizing: border-box;
+        background: #222222;
     }
 `;
 
@@ -30,7 +33,6 @@ function App() {
 
     return (
         <StyledBox>
-            <CssBaseline/>
             <StyledAppBar position="fixed">
                 <Toolbar>
                     <BreadCrumbs path={path}/>
@@ -40,10 +42,16 @@ function App() {
                 <Toolbar/>
                 <Outlet/>
             </StyledDrawer>
-            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                width: '100%',
+                background: '#121212'
+            }}>
                 <Toolbar/>
                 <ObjectGrid/>
-            </Box>
+            </div>
         </StyledBox>
     );
 }

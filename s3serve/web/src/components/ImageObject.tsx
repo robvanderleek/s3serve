@@ -2,8 +2,14 @@ import {Image, ImageObjectContainer} from "./ImageObject.style.tsx";
 import {Skeleton, Tooltip} from "@mui/material";
 import {useEffect, useState} from "react";
 
-export default function ImageObject(props: { bucketName: string, objectKey: string }) {
-    const {bucketName, objectKey} = props;
+interface ImageObjectProps {
+    bucketName: string;
+    objectKey: string;
+    onClick?: () => void;
+}
+
+export default function ImageObject(props: ImageObjectProps) {
+    const {bucketName, objectKey, onClick} = props;
     const [loading, setLoading] = useState(true);
     const [imageBlobUrl, setImageBlobUrl] = useState('');
 
@@ -20,7 +26,7 @@ export default function ImageObject(props: { bucketName: string, objectKey: stri
 
 
     return (
-        <ImageObjectContainer>
+        <ImageObjectContainer onClick={onClick}>
             {loading && <Skeleton variant="rectangular" width={180} height={180}/>}
 
             {!loading &&

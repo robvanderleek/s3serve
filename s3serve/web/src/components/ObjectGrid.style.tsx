@@ -11,6 +11,5 @@ export const LoaderContainer = styled('div')`
 
 export const StyledInfiniteScroll = styled(InfiniteScroll)`
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
 `;

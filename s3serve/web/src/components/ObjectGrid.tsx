@@ -1,25 +1,28 @@
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {parseBucketName, parseObjectKey} from "../utils.ts";
+import {parseBucketName, parseFolderKey} from "../utils.ts";
 import {ListObjectsV2Response} from "../entities/ListObjectsV2Response.ts";
 import {ListObjectsV2ContentResponse} from "../entities/ListObjectsV2ContentResponse.ts";
 import {LoaderContainer, StyledInfiniteScroll} from "./ObjectGrid.style.tsx";
 import {Bars} from "react-loader-spinner";
 import ImageObject from "./ImageObject.tsx";
+import ImageLightbox from "./ImageLightbox.tsx";
 
 export default function ObjectGrid() {
     const {'*': path} = useParams();
     const bucketName = parseBucketName(path);
-    const objectKey = parseObjectKey(path);
+    const folderKey = parseFolderKey(path);
     const [continuationToken, setContinuationToken] = useState<string | undefined>(undefined);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [objectKeys, setObjectKeys] = useState<ListObjectsV2ContentResponse[]>([]);
+    const [selectedObjectKeyIndex, setSelectedObjectKeyIndex] = useState<number>(-1);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const loadObjects = async (append = true) => {
         let url = `/api/v1/buckets/${bucketName}/objects`;
         const params = new URLSearchParams();
-        if (objectKey) {
-            params.append('prefix', objectKey + '/');
+        if (folderKey) {
+            params.append('prefix', folderKey + '/');
         }
         if (continuationToken) {
             params.append('token', continuationToken);
@@ -43,8 +46,15 @@ export default function ObjectGrid() {
         setContinuationToken(undefined);
         setHasMore(true);
         setObjectKeys([]);
+        setSelectedObjectKeyIndex(-1);
         loadObjects(false);
-    }, [bucketName, objectKey]);
+    }, [bucketName, folderKey]);
+
+    useEffect(() => {
+        if (!searchParams.has('object')) {
+            setSelectedObjectKeyIndex(-1);
+        }
+    }, [searchParams]);
 
     const isImageKey = (key: string) => {
         return key.toLowerCase().endsWith('.jpg') || key.toLowerCase().endsWith('.jpeg') || key.toLowerCase().endsWith('.png');
@@ -58,17 +68,32 @@ export default function ObjectGrid() {
         );
     }
 
+    const selectObject = (index: number) => {
+        setSelectedObjectKeyIndex(index);
+        setSearchParams({object: objectKeys[index].Key});
+    }
+
     if (bucketName) {
-        return (
-            <StyledInfiniteScroll
-                dataLength={objectKeys.length}
-                next={loadObjects}
-                hasMore={hasMore}
-                loader={loader()}
-            >
-                {objectKeys.map(ok => <ImageObject key={ok.Key} bucketName={bucketName} objectKey={ok.Key}/>)}
-            </StyledInfiniteScroll>
-        );
+        if (selectedObjectKeyIndex >= 0) {
+            return (
+                <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <ImageLightbox bucketName={bucketName} objectKey={objectKeys[selectedObjectKeyIndex].Key}/>
+                </div>
+            );
+        } else {
+            return (
+                <StyledInfiniteScroll
+                    dataLength={objectKeys.length}
+                    next={loadObjects}
+                    hasMore={hasMore}
+                    loader={loader()}
+                >
+                    {objectKeys.map((ok, index) => <ImageObject key={ok.Key}
+                                                                onClick={() => selectObject(index)}
+                                                                bucketName={bucketName} objectKey={ok.Key}/>)}
+                </StyledInfiniteScroll>
+            );
+        }
     }
 
 }

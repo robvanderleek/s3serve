@@ -2,20 +2,20 @@ import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/m
 import {useEffect, useState} from "react";
 import {ArrowBackOutlined, FolderOutlined} from "@mui/icons-material";
 import {Link, useParams} from "react-router-dom";
-import {parseBucketName, parseObjectKey} from "../utils.ts";
+import {parseBucketName, parseFolderKey} from "../utils.ts";
 
 export default function FolderList() {
     const [folders, setFolders] = useState<string[]>([]);
     const {'*': path} = useParams();
     const bucketName = parseBucketName(path);
-    const objectKey = parseObjectKey(path);
+    const folderKey = parseFolderKey(path);
 
     useEffect(() => {
         if (bucketName) {
             const loadBuckets = async () => {
                 let url = `/api/v1/buckets/${bucketName}/folders`;
-                if (objectKey) {
-                    url += `?prefix=${encodeURIComponent(objectKey + '/')}`;
+                if (folderKey) {
+                    url += `?prefix=${encodeURIComponent(folderKey + '/')}`;
                 }
                 const res = await fetch(url);
                 const json = await res.json();
@@ -23,7 +23,7 @@ export default function FolderList() {
             };
             loadBuckets();
         }
-    }, [bucketName, objectKey]);
+    }, [bucketName, folderKey]);
 
     const renderBucketListItem = (folder: string) => {
         return (
@@ -42,11 +42,11 @@ export default function FolderList() {
 
     const getBackLink = () => {
         let result = '/';
-        if (objectKey) {
+        if (folderKey) {
             result += `bucket/${bucketName}`;
-            const folderSeparatorIndex = objectKey.lastIndexOf('/');
+            const folderSeparatorIndex = folderKey.lastIndexOf('/');
             if (folderSeparatorIndex > 0) {
-                result += `/${(objectKey.substring(0, folderSeparatorIndex))}`;
+                result += `/${(folderKey.substring(0, folderSeparatorIndex))}`;
             }
         }
         return result;
