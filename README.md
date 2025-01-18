@@ -9,6 +9,7 @@
 <div align="center">
 
 [![Build Status](https://github.com/robvanderleek/s3serve/workflows/main/badge.svg)](https://github.com/robvanderleek/s3serve/actions)
+[![CodeLimit](https://github.com/robvanderleek/s3serve/blob/_codelimit_reports/main/badge.svg)](https://github.com/robvanderleek/s3serve/blob/_codelimit_reports/main/codelimit.md)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 </div>
