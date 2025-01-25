@@ -13,3 +13,12 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
     display: flex;
     flex-wrap: wrap;
 `;
+
+export const LightboxContainer = styled('div')`
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+`;

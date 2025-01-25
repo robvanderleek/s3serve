@@ -1,5 +1,6 @@
-import {Skeleton} from "@mui/material";
 import {useEffect, useState} from "react";
+import {Bars} from "react-loader-spinner";
+import {ImageContainer, LoaderContainer} from "./ImageLightbox.style.tsx";
 
 export default function ImageLightbox(props: { bucketName: string, objectKey: string }) {
     const {bucketName, objectKey} = props;
@@ -14,21 +15,18 @@ export default function ImageLightbox(props: { bucketName: string, objectKey: st
             setImageBlobUrl(URL.createObjectURL(blob));
             setLoading(false);
         };
+        setLoading(true);
         loadImage();
-    }, []);
+    }, [bucketName, objectKey]);
 
     if (loading) {
-        return (<Skeleton variant="rectangular"/>);
+        return (
+            <LoaderContainer>
+                <Bars height="50" width="60" color="#ffffff" ariaLabel="bars-loading"/>
+            </LoaderContainer>);
     } else {
         return (
-            <div style={{
-                backgroundImage: `url(${imageBlobUrl})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: "no-repeat",
-                backgroundSize: 'contain',
-                width: '100%',
-                height: '100%',
-            }}/>
+            <ImageContainer imageBlobUrl={imageBlobUrl}/>
         );
     }
 }

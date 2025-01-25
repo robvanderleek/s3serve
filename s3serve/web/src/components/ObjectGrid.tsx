@@ -3,10 +3,13 @@ import {useEffect, useState} from "react";
 import {parseBucketName, parseFolderKey} from "../utils.ts";
 import {ListObjectsV2Response} from "../entities/ListObjectsV2Response.ts";
 import {ListObjectsV2ContentResponse} from "../entities/ListObjectsV2ContentResponse.ts";
-import {LoaderContainer, StyledInfiniteScroll} from "./ObjectGrid.style.tsx";
+import {LightboxContainer, LoaderContainer, StyledInfiniteScroll} from "./ObjectGrid.style.tsx";
 import {Bars} from "react-loader-spinner";
 import ImageObject from "./ImageObject.tsx";
 import ImageLightbox from "./ImageLightbox.tsx";
+import {Button, ButtonGroup} from "@mui/material";
+import {useHotkeys} from "react-hotkeys-hook";
+import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 
 export default function ObjectGrid() {
     const {'*': path} = useParams();
@@ -42,6 +45,18 @@ export default function ObjectGrid() {
         }
     }
 
+    useHotkeys('left', () => {
+        previousObject();
+    }, [objectKeys, selectedObjectKeyIndex]);
+
+    useHotkeys('esc', () => {
+        closeLightbox();
+    }, []);
+
+    useHotkeys('right', () => {
+        nextObject();
+    }, [objectKeys, selectedObjectKeyIndex]);
+
     useEffect(() => {
         setContinuationToken(undefined);
         setHasMore(true);
@@ -73,12 +88,30 @@ export default function ObjectGrid() {
         setSearchParams({object: objectKeys[index].Key});
     }
 
+    const previousObject = () => {
+        selectObject(Math.max(0, selectedObjectKeyIndex - 1));
+    }
+
+    const nextObject = () => {
+        selectObject(Math.min(objectKeys.length - 1, selectedObjectKeyIndex + 1));
+    }
+
+    const closeLightbox = () => setSelectedObjectKeyIndex(-1);
+
     if (bucketName) {
         if (selectedObjectKeyIndex >= 0) {
             return (
-                <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <LightboxContainer>
                     <ImageLightbox bucketName={bucketName} objectKey={objectKeys[selectedObjectKeyIndex].Key}/>
-                </div>
+                    <ButtonGroup variant="contained" style={{marginTop: '1em'}}>
+                        <Button onClick={previousObject} disabled={selectedObjectKeyIndex <= 0}
+                                startIcon={<KeyboardArrowLeft/>}>Previous</Button>
+                        <Button onClick={nextObject}
+                                disabled={selectedObjectKeyIndex >= objectKeys.length - 1}
+                                endIcon={<KeyboardArrowRight/>}>Next</Button>
+                        <Button onClick={closeLightbox}>Close</Button>
+                    </ButtonGroup>
+                </LightboxContainer>
             );
         } else {
             return (
