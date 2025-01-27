@@ -8,14 +8,14 @@ interface ImageObjectProps {
     onClick?: () => void;
 }
 
-export default function ImageObject(props: ImageObjectProps) {
+export default function ImageThumbnailObject(props: ImageObjectProps) {
     const {bucketName, objectKey, onClick} = props;
     const [loading, setLoading] = useState(true);
     const [imageBlobUrl, setImageBlobUrl] = useState('');
 
     useEffect(() => {
         const loadImage = async () => {
-            const url = `/api/v1/buckets/${bucketName}/object?key=${encodeURIComponent(objectKey)}`;
+            const url = `/api/v1/buckets/${bucketName}/object?key=${encodeURIComponent(objectKey)}&thumbnail=true`;
             const res = await fetch(url);
             const blob = await res.blob();
             setImageBlobUrl(URL.createObjectURL(blob));

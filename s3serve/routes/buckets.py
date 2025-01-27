@@ -1,4 +1,7 @@
+from io import BytesIO
+
 import boto3
+from PIL import Image
 from fastapi import APIRouter
 from starlette.responses import Response
 
@@ -31,10 +34,17 @@ def get_objects(bucket: str, prefix: str = None, token: str = None) -> ListObjec
 
 
 @router.get("/buckets/{bucket}/object")
-def get_object(bucket: str, key: str):
+def get_object(bucket: str, key: str, thumbnail: bool = False):
     s3 = boto3.client('s3')
     res = s3.get_object(Bucket=bucket, Key=key)
     body = res['Body']
-    image_bytes = body.read()
+    if thumbnail:
+        im = Image.open(body)
+        im.thumbnail((180, 180))
+        buffer = BytesIO()
+        im.save(buffer, format='JPEG')
+        image_bytes = buffer.getvalue()
+    else:
+        image_bytes = body.read()
     media_type = get_media_type(key)
-    return Response(content=image_bytes, media_type=media_type)
+    return Response(content=image_bytes, media_type=media_type, headers={"Cache-Control": 'max-age=86400'})

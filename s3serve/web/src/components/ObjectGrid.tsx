@@ -5,7 +5,7 @@ import {ListObjectsV2Response} from "../entities/ListObjectsV2Response.ts";
 import {ListObjectsV2ContentResponse} from "../entities/ListObjectsV2ContentResponse.ts";
 import {LightboxContainer, LoaderContainer, StyledInfiniteScroll} from "./ObjectGrid.style.tsx";
 import {Bars} from "react-loader-spinner";
-import ImageObject from "./ImageObject.tsx";
+import ImageThumbnailObject from "./ImageThumbnailObject.tsx";
 import ImageLightbox from "./ImageLightbox.tsx";
 import {Button, ButtonGroup} from "@mui/material";
 import {useHotkeys} from "react-hotkeys-hook";
@@ -121,9 +121,9 @@ export default function ObjectGrid() {
                     hasMore={hasMore}
                     loader={loader()}
                 >
-                    {objectKeys.map((ok, index) => <ImageObject key={ok.Key}
-                                                                onClick={() => selectObject(index)}
-                                                                bucketName={bucketName} objectKey={ok.Key}/>)}
+                    {objectKeys.map((ok, index) => <ImageThumbnailObject key={ok.Key}
+                                                                         onClick={() => selectObject(index)}
+                                                                         bucketName={bucketName} objectKey={ok.Key}/>)}
                 </StyledInfiniteScroll>
             );
         }
