@@ -1,7 +1,7 @@
 {
   "version": "0.18.1",
-  "uuid": "3577de36-e801-4fb9-896b-5d634971f3a5",
-  "timestamp": "2025-01-25T08:20:59+00:00",
+  "uuid": "4b81d0f7-e79b-4922-b634-db94b77010f7",
+  "timestamp": "2025-01-27T22:08:59+00:00",
   "root": "/github/workspace",
   "repository": {
     "owner": "robvanderleek",
@@ -12,7 +12,7 @@
     "totals": {
       "Python": {
         "files": 15,
-        "lines_of_code": 65,
+        "lines_of_code": 72,
         "functions": 12,
         "hard_to_maintain": 0,
         "unmaintainable": 0
@@ -38,7 +38,7 @@
           "main.py",
           "s3serve/"
         ],
-        "profile": [76, 0, 0, 0]
+        "profile": [83, 0, 0, 0]
       },
       "s3serve/": {
         "entries": [
@@ -53,7 +53,7 @@
           "web/",
           "services/"
         ],
-        "profile": [76, 0, 0, 0]
+        "profile": [83, 0, 0, 0]
       },
       "s3serve/schemas/": {
         "entries": [
@@ -69,7 +69,7 @@
           "buckets.py",
           "__init__.py"
         ],
-        "profile": [19, 0, 0, 0]
+        "profile": [26, 0, 0, 0]
       },
       "s3serve/web/": {
         "entries": [
@@ -196,15 +196,15 @@
         ]
       },
       "s3serve/routes/buckets.py": {
-        "checksum": "9a4d6dfc872b40700d20b412e1bc8f03",
+        "checksum": "34a66c636a1049a9e85f170820232697",
         "language": "Python",
-        "loc": 19,
-        "profile": [19, 0, 0, 0],
+        "loc": 26,
+        "profile": [26, 0, 0, 0],
         "measurements": [
-          {"unit_name": "get_buckets", "start": {"line": 13, "column": 1}, "end": {"line": 15, "column": 63}, "value": 3},
-          {"unit_name": "get_folders", "start": {"line": 19, "column": 1}, "end": {"line": 25, "column": 32}, "value": 7},
-          {"unit_name": "get_objects", "start": {"line": 29, "column": 1}, "end": {"line": 30, "column": 57}, "value": 2},
-          {"unit_name": "get_object", "start": {"line": 34, "column": 1}, "end": {"line": 40, "column": 64}, "value": 7}
+          {"unit_name": "get_buckets", "start": {"line": 16, "column": 1}, "end": {"line": 18, "column": 63}, "value": 3},
+          {"unit_name": "get_folders", "start": {"line": 22, "column": 1}, "end": {"line": 28, "column": 32}, "value": 7},
+          {"unit_name": "get_objects", "start": {"line": 32, "column": 1}, "end": {"line": 33, "column": 57}, "value": 2},
+          {"unit_name": "get_object", "start": {"line": 37, "column": 1}, "end": {"line": 50, "column": 108}, "value": 14}
         ]
       },
       "s3serve/routes/__init__.py": {
