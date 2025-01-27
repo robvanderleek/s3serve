@@ -3,10 +3,10 @@
 ### Overview
 | **Language** | **Files** | **Functions** | **Lines of Code** | **⚠** | **⛌** |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Python | 15 | 12 | 65 | 0 | 0 |
+| Python | 15 | 12 | 72 | 0 | 0 |
 | TypeScript | 5 | 2 | 11 | 0 | 0 |
 | JavaScript | 1 | 0 | 0 | 0 | 0 |
-| **Totals** | **21** | **14** | **76** | **0** | **0** |
+| **Totals** | **21** | **14** | **83** | **0** | **0** |
 
 ### Summary
 | **Easy / Verbose** | **Hard-to-maintain ⚠** | **Unmaintainable ⛌** |
