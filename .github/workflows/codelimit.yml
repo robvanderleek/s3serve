@@ -1,4 +1,4 @@
-name: 'codelimit'
+name: codelimit
 
 on:
   push:
@@ -14,8 +14,8 @@ jobs:
     permissions:
       contents: write
     steps:
-    - name: 'Checkout sources'
-      uses: actions/checkout@v4
+    - name: Checkout sources
+      uses: actions/checkout@v6
 
-    - name: 'Run CodeLimit'
+    - name: Run CodeLimit
       uses: getcodelimit/codelimit-action@v1

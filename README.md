@@ -32,11 +32,11 @@ s3serve
 
 # Development
 
-After installing dependencies with `poetry install`, S3 Serve can be run from
-the repository root like this:
+After installing dependencies with `uv sync`, S3 Serve can be run from the
+repository root like this:
 
 ```shell
-poetry run s3serve
+uv run s3serve
 ```
 
 ## Local installation using pipx
@@ -58,5 +58,5 @@ pipx install git+https://github.com/robvanderleek/s3serve.git
 Or to install another branch locally run:
 
 ```shell
-pip install git+https://github.com/robvanderleek/s3serve.git@issue-123
+pipx install git+https://github.com/robvanderleek/s3serve.git@issue-123
 ``` 
