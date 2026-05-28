@@ -1,7 +1,7 @@
 {
-  "version": "0.18.1",
-  "uuid": "4b81d0f7-e79b-4922-b634-db94b77010f7",
-  "timestamp": "2025-01-27T22:08:59+00:00",
+  "version": "0.21.0",
+  "uuid": "f983aa19-4898-478b-a634-b8efe54f5172",
+  "timestamp": "2026-05-28T14:47:01+00:00",
   "root": "/github/workspace",
   "repository": {
     "owner": "robvanderleek",
@@ -43,26 +43,17 @@
       "s3serve/": {
         "entries": [
           "app.py",
-          "config.py",
           "__main__.py",
-          "__init__.py",
           "utils.py",
+          "__init__.py",
           "version.py",
-          "schemas/",
+          "config.py",
           "routes/",
           "web/",
+          "schemas/",
           "services/"
         ],
         "profile": [83, 0, 0, 0]
-      },
-      "s3serve/schemas/": {
-        "entries": [
-          "ListObjectsV2CommonPrefixResponse.py",
-          "ListObjectsV2Response.py",
-          "__init__.py",
-          "ListObjectsV2ContentResponse.py"
-        ],
-        "profile": [0, 0, 0, 0]
       },
       "s3serve/routes/": {
         "entries": [
@@ -81,16 +72,25 @@
       },
       "s3serve/web/src/": {
         "entries": [
-          "vite-env.d.ts",
           "utils.ts",
+          "vite-env.d.ts",
           "entities/"
         ],
         "profile": [11, 0, 0, 0]
       },
       "s3serve/web/src/entities/": {
         "entries": [
-          "ListObjectsV2Response.ts",
-          "ListObjectsV2ContentResponse.ts"
+          "ListObjectsV2ContentResponse.ts",
+          "ListObjectsV2Response.ts"
+        ],
+        "profile": [0, 0, 0, 0]
+      },
+      "s3serve/schemas/": {
+        "entries": [
+          "ListObjectsV2Response.py",
+          "ListObjectsV2ContentResponse.py",
+          "ListObjectsV2CommonPrefixResponse.py",
+          "__init__.py"
         ],
         "profile": [0, 0, 0, 0]
       },
@@ -120,14 +120,6 @@
           {"unit_name": "__init__", "start": {"line": 30, "column": 5}, "end": {"line": 31, "column": 42}, "value": 2}
         ]
       },
-      "s3serve/config.py": {
-        "checksum": "cff28e63ff51eacfffef3eabc8dd4a01",
-        "language": "Python",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
-        ]
-      },
       "s3serve/__main__.py": {
         "checksum": "8a7b6d270136bbf873cff8513a928ea2",
         "language": "Python",
@@ -136,14 +128,6 @@
         "measurements": [
           {"unit_name": "serve", "start": {"line": 7, "column": 1}, "end": {"line": 13, "column": 105}, "value": 7},
           {"unit_name": "main", "start": {"line": 15, "column": 1}, "end": {"line": 16, "column": 21}, "value": 2}
-        ]
-      },
-      "s3serve/__init__.py": {
-        "checksum": "d41d8cd98f00b204e9800998ecf8427e",
-        "language": "Python",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
         ]
       },
       "s3serve/utils.py": {
@@ -155,6 +139,14 @@
           {"unit_name": "get_media_type", "start": {"line": 1, "column": 1}, "end": {"line": 9, "column": 42}, "value": 9}
         ]
       },
+      "s3serve/__init__.py": {
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e",
+        "language": "Python",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
       "s3serve/version.py": {
         "checksum": "7f67fce74481e039acdc8120a940429c",
         "language": "Python",
@@ -163,32 +155,8 @@
         "measurements": [
         ]
       },
-      "s3serve/schemas/ListObjectsV2CommonPrefixResponse.py": {
-        "checksum": "04ce81072a33339dfe40ff9dae4fb723",
-        "language": "Python",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
-        ]
-      },
-      "s3serve/schemas/ListObjectsV2Response.py": {
-        "checksum": "95bc86fcc8cc3805469f820f186d713a",
-        "language": "Python",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
-        ]
-      },
-      "s3serve/schemas/__init__.py": {
-        "checksum": "d41d8cd98f00b204e9800998ecf8427e",
-        "language": "Python",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
-        ]
-      },
-      "s3serve/schemas/ListObjectsV2ContentResponse.py": {
-        "checksum": "0c23fec3798d835316975a23195c3c78",
+      "s3serve/config.py": {
+        "checksum": "cff28e63ff51eacfffef3eabc8dd4a01",
         "language": "Python",
         "loc": 0,
         "profile": [0, 0, 0, 0],
@@ -231,14 +199,6 @@
         "measurements": [
         ]
       },
-      "s3serve/web/src/vite-env.d.ts": {
-        "checksum": "0352474ba2918efe13895edbc3780d94",
-        "language": "TypeScript",
-        "loc": 0,
-        "profile": [0, 0, 0, 0],
-        "measurements": [
-        ]
-      },
       "s3serve/web/src/utils.ts": {
         "checksum": "0a346037f3b4700cbda72184f215da0d",
         "language": "TypeScript",
@@ -249,8 +209,8 @@
           {"unit_name": "parseFolderKey", "start": {"line": 5, "column": 17}, "end": {"line": 12, "column": 2}, "value": 8}
         ]
       },
-      "s3serve/web/src/entities/ListObjectsV2Response.ts": {
-        "checksum": "0331138f6fc10c2c7ada14b412bc2731",
+      "s3serve/web/src/vite-env.d.ts": {
+        "checksum": "0352474ba2918efe13895edbc3780d94",
         "language": "TypeScript",
         "loc": 0,
         "profile": [0, 0, 0, 0],
@@ -260,6 +220,46 @@
       "s3serve/web/src/entities/ListObjectsV2ContentResponse.ts": {
         "checksum": "720e80cc073d7203baa26217ed24ef68",
         "language": "TypeScript",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
+      "s3serve/web/src/entities/ListObjectsV2Response.ts": {
+        "checksum": "0331138f6fc10c2c7ada14b412bc2731",
+        "language": "TypeScript",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
+      "s3serve/schemas/ListObjectsV2Response.py": {
+        "checksum": "95bc86fcc8cc3805469f820f186d713a",
+        "language": "Python",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
+      "s3serve/schemas/ListObjectsV2ContentResponse.py": {
+        "checksum": "0c23fec3798d835316975a23195c3c78",
+        "language": "Python",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
+      "s3serve/schemas/ListObjectsV2CommonPrefixResponse.py": {
+        "checksum": "04ce81072a33339dfe40ff9dae4fb723",
+        "language": "Python",
+        "loc": 0,
+        "profile": [0, 0, 0, 0],
+        "measurements": [
+        ]
+      },
+      "s3serve/schemas/__init__.py": {
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e",
+        "language": "Python",
         "loc": 0,
         "profile": [0, 0, 0, 0],
         "measurements": [
